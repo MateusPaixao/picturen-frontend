@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Container, Input, Button, GroupSearch, Text } from './styles'
+import { FlatList, StyleSheet, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Feather } from '@expo/vector-icons'
 
 import api from '../../services/api'
 
 const Register: React.FC = () => {
 
+    const navigation = useNavigation()
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
 
@@ -16,24 +19,64 @@ const Register: React.FC = () => {
             return
         }
 
-        const { data: imagesFound } = await api.get(`/images?word=${word}`)
+        const { data, status } = await api.get(`/images?word=${word}`)
 
-        if (images){
-            setImages(imagesFound)
+        if (data && status == 200){
+            setImages(data.images)
+            console.log(data.images)
+        }
+    }
+
+
+    async function handlerRegister(image: string) {
+        const { data, status } = await api.post('/words', {
+            link: image,
+            word,
+            username: 'mateus'
+        }) 
+
+        if(status == 200){
+            navigation.navigate('List')
         }
     }
 
     return (
         <Container>
             <GroupSearch>
-                <Input onChangeText={(word: string) => setWord(word)}/>
+                <Input placeholder="Type a word..." onChangeText={(word: string) => setWord(word)}/>
                 <Button onPress={handleSearch}>
-                    <Feather name="search" size={25} color={'#333333'}/>
+                    <Feather name="search" size={25} color="#333333"/>
                     <Text>Search</Text>    
                 </Button>  
             </GroupSearch>
+
+
+            <FlatList
+                contentContainerStyle={styles.list}
+                showsVerticalScrollIndicator={false}
+                numColumns={Platform.OS == 'web' ? 2 : 1}
+                data={images}
+                keyExtractor={image => image}
+                renderItem={({ item: image }) => (
+                    <ButtonImage onPress={() => handlerRegister(image)}>
+                        <Image source={{ uri: image }} />
+                    </ButtonImage>
+                )}
+            />
         </Container>
     )
 }
+
+const styles = StyleSheet.create({
+    list: {
+        padding: 24,
+        // flexDirection: 'row',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // flexWrap: 'wrap',
+        // marginHorizontal: 'auto',
+        // maxWidth: 800
+    }
+})
 
 export default Register;

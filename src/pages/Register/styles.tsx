@@ -17,7 +17,6 @@ export const Input = styled.TextInput`
     flex: 0 0 30%;
     padding: 5px;
     border: 1px solid #333333;
-    outline: none;
 `
 
 export const Text = styled.Text`
@@ -38,6 +37,11 @@ export const Button = styled.TouchableOpacity`
     align-items: center;
 `
 
-
-
+export const Image = styled.Image`
+    width: 300px;
+    height: 300px;
+`
+export const ButtonImage = styled.TouchableOpacity`
+    margin: 5px;
+`
 
