@@ -1,6 +1,7 @@
 # Picturen Frontend
 > A simple app for help memorize new words in yours vocabulary
-> Initial TODO
+
+### Initial TODO
 
  - [ ] Features
    - [x] Create word
