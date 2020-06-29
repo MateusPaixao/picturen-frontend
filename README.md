@@ -2,19 +2,19 @@
 > Initial TODO
 
  - [ ] Features
-   - [ ] Create word
-   - [ ] Reading word (all)
+   - [x] Create word
+   - [x] Reading word (all)
    - [ ] Update word
    - [ ] Delete word
-   - [ ] Speech word
+   - [x] Speech word
    - [ ] Register user
    - [ ] Login user
    - [ ] Speech word for search
    - [ ] Filter on list words
 - [ ] Layout
-  - [ ] Screen register word
-  - [ ] Screen list word (all)
-    - [ ] Box actions
+  - [x] Screen register word
+  - [x] Screen list word (all)
+    - [x] Box actions
   - [ ] Screen login
   - [ ] Screen register user
   - [ ] Screen lost password
