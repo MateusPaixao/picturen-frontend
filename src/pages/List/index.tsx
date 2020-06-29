@@ -10,8 +10,13 @@ import {
     BoxEdit,
     ButtonAction,
     TextButton, 
-    InputAction
+    InputAction,
+    Actions,
+    Text,
+    GroupText
 } from './styles'
+
+import { Feather } from '@expo/vector-icons'
 
 import * as Speech from 'expo-speech'
 
@@ -28,6 +33,7 @@ const List: React.FC = () => {
     const [showBoxAction, setShowBoxAction] = useState(0)
     const [words, setWords] = useState<Word[]>([])
     const [currentWord, setCurrentWord] = useState('')
+    const [modeAction, setModeAction] = useState('')
 
     useEffect(() => {
         api.get('/words/mateus')
@@ -38,9 +44,10 @@ const List: React.FC = () => {
         })
     }, [])
 
-    function toggleCurrentWord(word: Word) {
+    function toggleCurrentWord(word: Word, mode: string = 'edit') {
         setShowBoxAction(word.id)
         setCurrentWord(word.word)
+        setModeAction(mode)
     }
 
     return (
@@ -53,32 +60,58 @@ const List: React.FC = () => {
                 data={words}
                 keyExtractor={word => String(word.id)}
                 renderItem={({ item: word }) => (
-                    <Group disabled={showBoxAction == word.id} onPress={() => toggleCurrentWord(word)}>
+                    <Group>
                         <Image source={{ uri: word.link }} />
                         <Word>{word.word}</Word>
 
+
+                        <Actions>
+                            <ButtonAction onPress={() => toggleCurrentWord(word)}>
+                                <Feather name="edit" size={24} color="#1B86F9"/>
+                            </ButtonAction>
+
+                            <ButtonAction onPress={() => Speech.speak(word.word, { language: 'en' })}>
+                                <Feather name="volume-2" size={24} color="#1B86F9"/>
+                            </ButtonAction>
+
+                            <ButtonAction onPress={() => toggleCurrentWord(word, 'delete')}>
+                                <Feather name="trash" size={24} color="#1B86F9"/>
+                            </ButtonAction>
+                        </Actions>
+
                         {showBoxAction == word.id && 
                         <BoxAction>
+                            {modeAction == 'edit' &&
                             <BoxEdit>
 
-                                <InputAction onChangeText={(word: string) => setCurrentWord(word)} value={currentWord} />
+                                <InputAction autoFocus={true} onChangeText={(word: string) => setCurrentWord(word)} value={currentWord} />
 
-                                <ButtonAction color="#2a9d8f">
-                                    <TextButton>Edit</TextButton>
+                                <ButtonAction color="#1b86f9">
+                                    <Feather name="save" size={24} color="#ffffff"/>
+                                    <TextButton>Save</TextButton>
                                 </ButtonAction>
 
-                                <ButtonAction color="#192BC2" onPress={() => Speech.speak(word.word, { language: 'en' })}>
-                                    <TextButton>Speech</TextButton>
-                                </ButtonAction>
+                            </BoxEdit>}
 
-                                <ButtonAction color="#e76f51">
+
+                            {modeAction == 'delete' &&
+                            <BoxEdit>
+
+                                <GroupText>
+                                    <Text>This will remove "{currentWord}" of your list, do you sure?</Text>
+                                </GroupText>
+
+                                <ButtonAction color="#e21b1b">
+                                    <Feather name="trash" size={24} color="#ffffff" />
                                     <TextButton>Delete</TextButton>
                                 </ButtonAction>
+                            </BoxEdit>}
+                            
+                            <ButtonAction onPress={() => setShowBoxAction(0)}>
+                                <TextButton>Cancel</TextButton>
+                            </ButtonAction>
 
-                                <ButtonAction color="#000000" onPress={() => setShowBoxAction(0)}>
-                                    <TextButton>Cancel</TextButton>
-                                </ButtonAction>
-                            </BoxEdit>
+                            
                         </BoxAction>}
                     </Group>
                     
