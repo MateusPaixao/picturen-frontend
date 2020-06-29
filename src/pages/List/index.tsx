@@ -13,6 +13,8 @@ import {
     InputAction
 } from './styles'
 
+import * as Speech from 'expo-speech'
+
 import api from '../../services/api'
 
 interface Word {
@@ -61,12 +63,20 @@ const List: React.FC = () => {
 
                                 <InputAction onChangeText={(word: string) => setCurrentWord(word)} value={currentWord} />
 
-                                <ButtonAction color="#2a9d8f;">
+                                <ButtonAction color="#2a9d8f">
                                     <TextButton>Edit</TextButton>
                                 </ButtonAction>
 
-                                <ButtonAction color="#e76f51;">
+                                <ButtonAction color="#192BC2" onPress={() => Speech.speak(word.word, { language: 'en' })}>
+                                    <TextButton>Speech</TextButton>
+                                </ButtonAction>
+
+                                <ButtonAction color="#e76f51">
                                     <TextButton>Delete</TextButton>
+                                </ButtonAction>
+
+                                <ButtonAction color="#000000" onPress={() => setShowBoxAction(0)}>
+                                    <TextButton>Cancel</TextButton>
                                 </ButtonAction>
                             </BoxEdit>
                         </BoxAction>}
