@@ -24,7 +24,7 @@
   - [ ] Definition colors
   - [ ] Set defined color on layout
   - [ ] Refact layout menu tabs
-  - [ ] Refact layout action on screen list
+  - [x] Refact layout action on screen list
   - [ ] Components filter words
   
  - [ ] Future feature
