@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Platform } from 'react-native';
+import { FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Feather } from '@expo/vector-icons'
 
 import api from '../../services/api'
+
+const window = Dimensions.get("window")
 
 const Register: React.FC = () => {
 
@@ -46,7 +48,7 @@ const Register: React.FC = () => {
                 <Input placeholder="Type a word..." placeholderTextColor="#ffffff" onChangeText={(word: string) => setWord(word)}/>
                 <Button onPress={handleSearch}>
                     <Feather name="search" size={25} color="#1b86f9"/>
-                    { Platform.OS == 'web' && <Text>Search</Text> }
+                    { window.width > 800 && <Text>Search</Text> }
                 </Button>  
             </GroupSearch>
 

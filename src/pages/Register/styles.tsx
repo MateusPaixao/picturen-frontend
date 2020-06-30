@@ -21,7 +21,7 @@ export const GroupSearch = styled.View`
 export const Text = styled.Text`
     text-transform: uppercase;
     font-weight: bold;
-    color: #333333;
+    color: #9c9cab;
     margin-left: 5px;
 `
 
