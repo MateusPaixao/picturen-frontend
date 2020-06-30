@@ -1,11 +1,14 @@
 import styled from 'styled-components/native';
 import Constants from 'expo-constants'
+import { Dimensions } from 'react-native'
+
+const window = Dimensions.get("window")
 
 export const Container = styled.View`
     flex: 1;
     align-items: center;
     padding: 10px;
-    background-color: #c3cfd9;
+    background-color: #373e57;
     padding-top: ${Constants.statusBarHeight+20}px;
 `
 export const GroupSearch = styled.View`
@@ -15,27 +18,30 @@ export const GroupSearch = styled.View`
     flex-direction: row;
 `
 
-export const Input = styled.TextInput`
-    flex: 0 0 30%;
-    padding: 5px;
-    border: 1px solid #333333;
-`
-
 export const Text = styled.Text`
     text-transform: uppercase;
     font-weight: bold;
     color: #333333;
     margin-left: 5px;
 `
+
+export const Input = styled.TextInput`
+    flex: 0 0 ${window.width > 800 ? 20 : 80}%;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 18px;
+    border: 1px solid #151728;
+    border-right-width: 0;
+`
+
 export const Button = styled.TouchableOpacity`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #63c9d4;
-    border: 1px solid #12c1ea;
-    padding: 10px;
+    background-color: #151728;
+    padding: 15px;
     max-width: 160px;
-    width: 80%;
+    width: ${window.width > 800 ? 80 : 20}%;
     align-items: center;
 `
 

@@ -43,10 +43,10 @@ const Register: React.FC = () => {
     return (
         <Container>
             <GroupSearch>
-                <Input placeholder="Type a word..." onChangeText={(word: string) => setWord(word)}/>
+                <Input placeholder="Type a word..." placeholderTextColor="#ffffff" onChangeText={(word: string) => setWord(word)}/>
                 <Button onPress={handleSearch}>
-                    <Feather name="search" size={25} color="#333333"/>
-                    <Text>Search</Text>    
+                    <Feather name="search" size={25} color="#1b86f9"/>
+                    { Platform.OS == 'web' && <Text>Search</Text> }
                 </Button>  
             </GroupSearch>
 

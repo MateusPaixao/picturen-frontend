@@ -13,7 +13,7 @@ const tabBarOptions = {
   tabStyle: { backgroundColor: '#151728' },
   style: { borderTopWidth: 0, borderTopColor: "transparent" },
   showLabel: false,
-  keyboardHidesTabBar: true,
+  // keyboardHidesTabBar: true,
   activeTintColor: '#1b86f9',
   inactiveTintColor: '#9c9cab'
 }
