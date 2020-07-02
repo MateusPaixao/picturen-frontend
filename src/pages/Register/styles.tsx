@@ -52,4 +52,5 @@ export const Image = styled.Image`
 export const ButtonImage = styled.TouchableOpacity`
     margin: 5px;
 `
-
+export const BoxInserted = styled.View`
+`

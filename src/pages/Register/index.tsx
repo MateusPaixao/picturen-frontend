@@ -10,6 +10,7 @@ const window = Dimensions.get("window")
 
 const Register: React.FC = () => {
 
+    let lastPress: number = 0
     const navigation = useNavigation()
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
@@ -31,15 +32,30 @@ const Register: React.FC = () => {
 
 
     async function handlerRegister(image: string) {
-        const { data, status } = await api.post('/words', {
-            link: image,
-            word,
-            username: 'mateus'
-        }) 
+        let delta = new Date().getTime() - lastPress
 
-        if(status == 200){
-            navigation.navigate('List')
+        if (delta < 200) {
+            alert('SHOW ANIMATION')
         }
+
+        lastPress = new Date().getTime()
+
+        return
+
+        if (delta < 200) {
+            const { data, status } = await api.post('/words', {
+                link: image,
+                word,
+                username: 'mateus'
+            })
+
+            if (status == 200) {
+                // navigation.navigate('List')
+                alert('Show animation!')
+            }
+        }
+
+        lastPress = new Date().getTime()
     }
 
     return (
