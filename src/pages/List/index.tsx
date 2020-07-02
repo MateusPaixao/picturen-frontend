@@ -50,6 +50,40 @@ const List: React.FC = () => {
         setModeAction(mode)
     }
 
+    async function handleUpdate(word: Word, currentWord: string) {
+        const { id } = word 
+
+        const { status } = await api.put(`/words/${id}`, { word: currentWord })
+
+        if(status == 204){
+
+            let wordsUpdate = [...words]
+            
+            const indexUpdated = wordsUpdate.findIndex(word => word.id == id)
+            wordsUpdate[indexUpdated].word = currentWord
+
+            setWords(wordsUpdate)
+            setShowBoxAction(0)
+        }
+    }
+
+
+    async function handleDelete(word: Word) {
+        const { id } = word
+
+        const { status } = await api.delete(`/words/${id}`)
+
+        if(status == 204){
+            let wordsRemove = [...words]
+
+            const indexRemove = wordsRemove.findIndex(word => word.id == id)
+            delete wordsRemove[indexRemove]
+
+            setWords(wordsRemove)
+            setShowBoxAction(0)
+        }
+    }
+
     return (
         <Container>
             <Title>Your similar words</Title>
@@ -86,7 +120,7 @@ const List: React.FC = () => {
 
                                 <InputAction autoFocus={true} onChangeText={(word: string) => setCurrentWord(word)} value={currentWord} />
 
-                                <ButtonAction color="#1b86f9">
+                                <ButtonAction color="#1b86f9" onPress={() => handleUpdate(word, currentWord)}>
                                     <Feather name="save" size={24} color="#ffffff"/>
                                     <TextButton>Save</TextButton>
                                 </ButtonAction>
@@ -101,7 +135,7 @@ const List: React.FC = () => {
                                     <Text>This will remove "{currentWord}" of your list, do you sure?</Text>
                                 </GroupText>
 
-                                <ButtonAction color="#e21b1b">
+                                <ButtonAction color="#e21b1b" onPress={() => handleDelete(word)}>
                                     <Feather name="trash" size={24} color="#ffffff" />
                                     <TextButton>Delete</TextButton>
                                 </ButtonAction>

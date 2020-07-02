@@ -26,7 +26,6 @@ const Register: React.FC = () => {
 
         if (data && status == 200){
             setImages(data.images)
-            console.log(data.images)
         }
     }
 
@@ -37,10 +36,6 @@ const Register: React.FC = () => {
         if (delta < 200) {
             alert('SHOW ANIMATION')
         }
-
-        lastPress = new Date().getTime()
-
-        return
 
         if (delta < 200) {
             const { data, status } = await api.post('/words', {
