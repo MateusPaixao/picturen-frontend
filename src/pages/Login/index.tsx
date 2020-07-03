@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Feather } from '@expo/vector-icons'
+
+import { storeData, getData } from '../../utils/storage'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,6 +25,17 @@ const Login: React.FC = () => {
 
     const navigation = useNavigation()
 
+    useEffect(() => {
+        const isLogged = async () => {
+            const isLogged = await getData('userLogged')
+            if (isLogged){
+                navigation.navigate('Home')
+            }
+        }
+
+        isLogged()
+    }, [])
+
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -39,8 +52,17 @@ const Login: React.FC = () => {
         if(loginMode){
 
             try {
-                const { data } = await api.post('/sessions', { email, password })
-                navigation.navigate('Home')
+                const { data: userLogged } = await api.post('/sessions', { email, password })
+
+                if (userLogged.auth){
+                    const syncData = await storeData('userLogged', userLogged)
+
+                    if (syncData) {
+                        navigation.navigate('Home')
+                    }else{
+                        alert('Erro on login, try again')
+                    }
+                }
             } catch (error) {
                 alert('Erro on login, try again')
             }
