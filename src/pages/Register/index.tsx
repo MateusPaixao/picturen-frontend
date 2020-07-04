@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Feather } from '@expo/vector-icons'
+import { getData } from '../../utils/storage'
 
 import api from '../../services/api'
 
@@ -14,6 +15,7 @@ const Register: React.FC = () => {
     const navigation = useNavigation()
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
+    const [user, setUser] = useState({})
 
     async function handleSearch() {
 
@@ -22,7 +24,16 @@ const Register: React.FC = () => {
             return
         }
 
-        const { data, status } = await api.get(`/images?word=${word}`)
+        const userLogged = await getData('userLogged')
+        setUser(userLogged)
+        
+        const options = {
+            headers: {
+                authorization: userLogged.token
+            }
+        }
+
+        const { data, status } = await api.get(`/images?word=${word}`, options)
 
         if (data && status == 200){
             setImages(data.images)

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
+import { getData } from '../../utils/storage'
 import {
     Container,
     Image,
@@ -35,13 +36,28 @@ const List: React.FC = () => {
     const [currentWord, setCurrentWord] = useState('')
     const [modeAction, setModeAction] = useState('')
 
+    const [user, setUser] = useState({})
+
     useEffect(() => {
-        api.get('/words/mateus')
-        .then(({data, status}) => {
+        
+        const loadWords = async () => {
+            const userLogged = await getData('userLogged')
+            const options = {
+                headers: {
+                    authorization: userLogged.token
+                }
+            }
+            const { data, status } = await api.get(`/words/${userLogged.username}`, options)
+
             if(status == 200){
+                setUser(userLogged)
                 setWords(data.words)
             }
-        })
+            
+        }
+
+        loadWords()
+
     }, [])
 
     function toggleCurrentWord(word: Word, mode: string = 'edit') {
