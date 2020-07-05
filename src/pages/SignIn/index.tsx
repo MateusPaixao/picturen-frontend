@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Feather } from '@expo/vector-icons'
 
-import { storeData, getData } from '../../utils/storage'
+import { useAuth } from '../../contexts/auth'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,7 +21,7 @@ import {
 import api from '../../services/api'
 
 
-const Login: React.FC = () => {
+const SignIn: React.FC = () => {
 
     const navigation = useNavigation()
 
@@ -43,6 +43,8 @@ const Login: React.FC = () => {
     const [showPass, setShowPass] = useState(false)
     const [loginMode, setMode] = useState(true)
 
+    const { signIn } = useAuth()
+
     async function handleSubmit(name: string, email: string, password: string, loginMode: boolean){
         if (!email.trim() || !password.trim()){
             alert('Ops, Fill in all fields')
@@ -52,17 +54,7 @@ const Login: React.FC = () => {
         if(loginMode){
 
             try {
-                const { data: userLogged } = await api.post('/sessions', { email, password })
-
-                if (userLogged.auth){
-                    const syncData = await storeData('userLogged', userLogged)
-
-                    if (syncData) {
-                        navigation.navigate('Home')
-                    }else{
-                        alert('Erro on login, try again')
-                    }
-                }
+                signIn(email, password)
             } catch (error) {
                 alert('Erro on login, try again')
             }
@@ -138,4 +130,4 @@ const Login: React.FC = () => {
     )
 }
 
-export default Login
+export default SignIn

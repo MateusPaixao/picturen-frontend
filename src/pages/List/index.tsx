@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
-import { getData } from '../../utils/storage'
+import { useAuth } from '../../contexts/auth'
 import {
     Container,
     Image,
@@ -36,24 +36,17 @@ const List: React.FC = () => {
     const [currentWord, setCurrentWord] = useState('')
     const [modeAction, setModeAction] = useState('')
 
-    const [user, setUser] = useState({})
+    const { user } = useAuth()
 
     useEffect(() => {
         
         const loadWords = async () => {
-            const userLogged = await getData('userLogged')
-            const options = {
-                headers: {
-                    authorization: userLogged.token
-                }
-            }
-            const { data, status } = await api.get(`/words/${userLogged.username}`, options)
+            
+            const { data, status } = await api.get(`/words/${user?.username}`)
 
             if(status == 200){
-                setUser(userLogged)
                 setWords(data.words)
             }
-            
         }
 
         loadWords()

@@ -1,11 +1,19 @@
-import React from 'react';
-import Routes from './src/routes';
-import { StatusBar, setStatusBarStyle } from 'expo-status-bar';
+import 'react-native-gesture-handler'
+import React from 'react'
 
-setStatusBarStyle('light')
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from './src/contexts/auth'
 
-export default function App() {
+import Routes from './src/routes/index.routes'
+
+const App: React.FC = () => {
   return (
-    <Routes /> 
-  );
+    <NavigationContainer>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </NavigationContainer>
+  )
 }
+
+export default App

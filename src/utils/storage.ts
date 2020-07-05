@@ -20,3 +20,12 @@ export const getData = async (key: string) => {
         return false
     }
 }
+
+export const clearData = async () => {
+    try {
+        await AsyncStorage.clear()
+        return true
+    }catch(error){
+        return false
+    }
+}

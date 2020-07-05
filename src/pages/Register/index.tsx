@@ -3,9 +3,10 @@ import { FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Feather } from '@expo/vector-icons'
-import { getData } from '../../utils/storage'
 
 import api from '../../services/api'
+
+import { useAuth } from '../../contexts/auth'
 
 const window = Dimensions.get("window")
 
@@ -15,7 +16,8 @@ const Register: React.FC = () => {
     const navigation = useNavigation()
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
-    const [user, setUser] = useState({})
+
+    const { user } = useAuth()
 
     async function handleSearch() {
 
@@ -24,16 +26,7 @@ const Register: React.FC = () => {
             return
         }
 
-        const userLogged = await getData('userLogged')
-        setUser(userLogged)
-        
-        const options = {
-            headers: {
-                authorization: userLogged.token
-            }
-        }
-
-        const { data, status } = await api.get(`/images?word=${word}`, options)
+        const { data, status } = await api.get(`/images?word=${word}`)
 
         if (data && status == 200){
             setImages(data.images)
@@ -45,14 +38,10 @@ const Register: React.FC = () => {
         let delta = new Date().getTime() - lastPress
 
         if (delta < 200) {
-            alert('SHOW ANIMATION')
-        }
-
-        if (delta < 200) {
             const { data, status } = await api.post('/words', {
                 link: image,
                 word,
-                username: 'mateus'
+                username: user?.username
             })
 
             if (status == 200) {
