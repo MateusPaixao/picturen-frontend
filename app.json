@@ -13,7 +13,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#151728"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,15 +22,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+       "bundleIdentifier": "com.fjordtech.picturen",
+       "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "themeColor": "#6633cc"
+      "themeColor": "#151728"
+    },
+    "android": {
+      "package": "com.fjordtech.picturen",
+      "versionCode": 1
     },
 
     "androidNavigationBar": {
-      "visible": true,
       "barStyle": "light-content",
       "backgroundColor": "#151728"
     }
