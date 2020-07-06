@@ -4,7 +4,8 @@ import { View, ActivityIndicator } from 'react-native'
 import { useAuth } from '../contexts/auth'
 
 import AuthRoutes from './auth.routes'
-import AppRoutes from './app.routes'
+// import AppRoutes from './app.routes'
+import UserRoutes from './user.routes'
 
 const Routes: React.FC = () => {
 
@@ -18,7 +19,7 @@ const Routes: React.FC = () => {
         )
     }
 
-    return signed ? <AppRoutes /> : <AuthRoutes />
+    return signed ? <UserRoutes /> : <AuthRoutes />
 }
 
 export default Routes

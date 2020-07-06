@@ -9,7 +9,12 @@ const Tab = createBottomTabNavigator()
 
 const tabBarOptions = {
   tabStyle: { backgroundColor: '#151728' },
-  style: { borderTopWidth: 0, borderTopColor: "transparent" },
+  style: { 
+    borderTopWidth: 0, 
+    borderTopColor: "transparent", 
+    borderBottomWidth: 0.2,
+    borderBottomColor: "#9c9cab" 
+  },
   showLabel: false,
   activeTintColor: '#1b86f9',
   inactiveTintColor: '#9c9cab'

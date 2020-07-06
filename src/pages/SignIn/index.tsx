@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Feather } from '@expo/vector-icons'
 
 import { useAuth } from '../../contexts/auth'
-
-import { useNavigation } from '@react-navigation/native';
 
 import { 
     Container, 
@@ -22,19 +20,6 @@ import api from '../../services/api'
 
 
 const SignIn: React.FC = () => {
-
-    const navigation = useNavigation()
-
-    useEffect(() => {
-        const isLogged = async () => {
-            const isLogged = await getData('userLogged')
-            if (isLogged){
-                navigation.navigate('Home')
-            }
-        }
-
-        isLogged()
-    }, [])
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')

@@ -14,7 +14,7 @@ export const Image = styled.Image`
     width: 200px;
     height: 200px;
     margin-bottom: 10px;
-    border-radius: 50%;
+    border-radius: 100px;
 `
 
 export const GroupIntput = styled.View`
@@ -34,6 +34,7 @@ export const Input = styled.TextInput`
     margin-left: 5px;
     padding: 5px;
     width: 100%;
+    max-width: 220px;
 `
 
 export const LoginButton = styled.TouchableOpacity`
