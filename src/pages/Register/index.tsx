@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Feather } from '@expo/vector-icons'
+
+import { Alert } from 'react-native'
 
 import api from '../../services/api'
 
@@ -13,7 +14,6 @@ const window = Dimensions.get("window")
 const Register: React.FC = () => {
 
     let lastPress: number = 0
-    const navigation = useNavigation()
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
 
@@ -45,8 +45,7 @@ const Register: React.FC = () => {
             })
 
             if (status == 200) {
-                // navigation.navigate('List')
-                alert('Show animation!')
+                Alert.alert('Success', 'Added in your list!')
             }
         }
 

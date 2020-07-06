@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/auth'
 import {
     Container,
@@ -31,6 +32,8 @@ interface Word {
 
 const List: React.FC = () => {
 
+    const navigation = useNavigation()
+
     const [showBoxAction, setShowBoxAction] = useState(0)
     const [words, setWords] = useState<Word[]>([])
     const [currentWord, setCurrentWord] = useState('')
@@ -49,9 +52,13 @@ const List: React.FC = () => {
             }
         }
 
-        loadWords()
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadWords()
+        });
 
-    }, [])
+        return unsubscribe
+
+    }, [navigation])
 
     function toggleCurrentWord(word: Word, mode: string = 'edit') {
         setShowBoxAction(word.id)
