@@ -77,7 +77,7 @@ const List: React.FC = () => {
             return
         }
 
-        const { status } = await api.put(`/words/${id}`, { word: currentWord })
+        const { status } = await api.put(`/words/${user?.username}/${id}`, { word: currentWord })
 
         if(status == 204){
 

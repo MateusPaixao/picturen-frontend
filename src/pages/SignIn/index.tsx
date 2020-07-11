@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Alert } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import { useAuth } from '../../contexts/auth'
@@ -17,6 +18,7 @@ import {
 import { Container } from '../../styles'
 
 import api from '../../services/api'
+import { validateEmail } from '../../utils/validate'
 
 
 const SignIn: React.FC = () => {
@@ -32,7 +34,12 @@ const SignIn: React.FC = () => {
 
     async function handleSubmit(name: string, email: string, password: string, loginMode: boolean){
         if (!email.trim() || !password.trim()){
-            alert('Ops, Fill in all fields')
+            Alert.alert('Ops', 'Fill in all fields')
+            return
+        }
+
+        if(!validateEmail(email)){
+            Alert.alert('Ops', 'Invalid email')
             return
         }
 
@@ -41,13 +48,13 @@ const SignIn: React.FC = () => {
             try {
                 signIn(email, password)
             } catch (error) {
-                alert('Erro on login, try again')
+                Alert.alert('Ops', 'Erro on login, try again')
             }
             
         }else{
 
             if (!name.trim()){
-                alert('Ops, Fill in all fields')
+                Alert.alert('Ops', 'Fill in all fields')
                 return 
             }
 
@@ -57,10 +64,10 @@ const SignIn: React.FC = () => {
                 if (status == 200){
                     await handleSubmit(name, email, password, true)
                 }else{
-                    alert('Erro on register, try again')
+                    Alert.alert('Ops', 'Erro on register, try again')
                 }
             } catch (error) {
-                alert('Erro on register, try again')
+                Alert.alert('Ops', 'Erro on register, try again')
             }
             
         }
