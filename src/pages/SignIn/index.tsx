@@ -4,7 +4,6 @@ import { Feather } from '@expo/vector-icons'
 import { useAuth } from '../../contexts/auth'
 
 import { 
-    Container, 
     Image, 
     GroupIntput, 
     Input, 
@@ -15,6 +14,7 @@ import {
     SignUpButton,
     TitleApp
 } from './styles'
+import { Container } from '../../styles'
 
 import api from '../../services/api'
 

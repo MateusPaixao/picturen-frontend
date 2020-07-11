@@ -1,16 +1,8 @@
 import styled from 'styled-components/native';
-import Constants from 'expo-constants'
 import { Dimensions } from 'react-native'
 
 const window = Dimensions.get("window")
 
-export const Container = styled.View`
-    flex: 1;
-    align-items: center;
-    padding: 10px;
-    background-color: #373e57;
-    padding-top: ${Constants.statusBarHeight+20}px;
-`
 export const GroupSearch = styled.View`
     justify-content: center;
     margin: 0 auto;

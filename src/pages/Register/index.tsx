@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
-import { Container, Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
+import { FlatList, StyleSheet, Platform, Dimensions, ActivityIndicator } from 'react-native';
+import { Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
+import { Container } from '../../styles'
 import { Feather } from '@expo/vector-icons'
 
 import { Alert } from 'react-native'
@@ -16,20 +17,24 @@ const Register: React.FC = () => {
     let lastPress: number = 0
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const { user } = useAuth()
 
     async function handleSearch() {
 
         if(!word.trim()) {
-            alert('Type the word for will search')
+            Alert.alert('Ops!', 'Type the word for will search')
             return
         }
+        setLoading(true)
 
         const { data, status } = await api.get(`/images?word=${word}`)
-
-        if (data && status == 200){
-            setImages(data.images)
+        if (data && status == 200) {
+            setLoading(false)
+            setImages([])
+            setTimeout(() => setImages(data.images), 500)
+            
         }
     }
 
@@ -62,8 +67,11 @@ const Register: React.FC = () => {
                 </Button>  
             </GroupSearch>
 
-
-            <FlatList
+            {loading && 
+            <Container>
+                <ActivityIndicator size="large" color="#151728" />
+            </Container>}
+            {!loading && <FlatList
                 contentContainerStyle={styles.list}
                 showsVerticalScrollIndicator={false}
                 numColumns={Platform.OS == 'web' ? 2 : 1}
@@ -74,7 +82,7 @@ const Register: React.FC = () => {
                         <Image source={{ uri: image }} />
                     </ButtonImage>
                 )}
-            />
+            />}
         </Container>
     )
 }

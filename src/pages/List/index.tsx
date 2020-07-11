@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList, Platform, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/auth'
 import {
-    Container,
     Image,
     Title,
     Group,
@@ -17,6 +16,8 @@ import {
     Text,
     GroupText
 } from './styles'
+
+import { Container } from '../../styles'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -69,6 +70,11 @@ const List: React.FC = () => {
     async function handleUpdate(word: Word, currentWord: string) {
         const { id } = word 
 
+        if(!currentWord.trim()){
+            Alert.alert('Ops!', 'Type something.')
+            return
+        }
+
         const { status } = await api.put(`/words/${id}`, { word: currentWord })
 
         if(status == 204){
@@ -84,20 +90,14 @@ const List: React.FC = () => {
     }
 
 
-    async function handleDelete(word: Word) {
+    function handleDelete(word: Word) {
         const { id } = word
 
-        const { status } = await api.delete(`/words/${id}`)
+        api.delete(`/words/${id}`)
+        const updatedWords = words.filter(word => word.id !== id)
 
-        if(status == 204){
-            let wordsRemove = [...words]
-
-            const indexRemove = wordsRemove.findIndex(word => word.id == id)
-            delete wordsRemove[indexRemove]
-
-            setWords(wordsRemove)
-            setShowBoxAction(0)
-        }
+        setWords(updatedWords)
+        setShowBoxAction(0)
     }
 
     return (
