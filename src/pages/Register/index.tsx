@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Platform, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useState, Fragment } from 'react';
+import { FlatList, StyleSheet, Platform, Dimensions, ActivityIndicator } from 'react-native'
 import { Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
 import { Container } from '../../styles'
+import Header from '../../components/Header'
 import { Feather } from '@expo/vector-icons'
 
 import { Alert } from 'react-native'
@@ -15,6 +16,7 @@ const window = Dimensions.get("window")
 const Register: React.FC = () => {
 
     let lastPress: number = 0
+
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
     const [loading, setLoading] = useState(false)
@@ -58,32 +60,35 @@ const Register: React.FC = () => {
     }
 
     return (
-        <Container>
-            <GroupSearch>
-                <Input placeholder="Type a word..." placeholderTextColor="#ffffff" onChangeText={(word: string) => setWord(word)}/>
-                <Button onPress={handleSearch}>
-                    <Feather name="search" size={25} color="#1b86f9"/>
-                    { window.width > 800 && <Text>Search</Text> }
-                </Button>  
-            </GroupSearch>
+        <Fragment>
+            <Header />
+            <Container paddingTop={15}>
+                <GroupSearch>
+                    <Input placeholder="Type a word..." placeholderTextColor="#ffffff" onChangeText={(word: string) => setWord(word)}/>
+                    <Button onPress={handleSearch}>
+                        <Feather name="search" size={25} color="#1b86f9"/>
+                        { window.width > 800 && <Text>Search</Text> }
+                    </Button>  
+                </GroupSearch>
 
-            {loading && 
-            <Container>
-                <ActivityIndicator size="large" color="#151728" />
-            </Container>}
-            {!loading && <FlatList
-                contentContainerStyle={styles.list}
-                showsVerticalScrollIndicator={false}
-                numColumns={Platform.OS == 'web' ? 2 : 1}
-                data={images}
-                keyExtractor={image => image}
-                renderItem={({ item: image }) => (
-                    <ButtonImage onPress={() => handlerRegister(image)}>
-                        <Image source={{ uri: image }} />
-                    </ButtonImage>
-                )}
-            />}
-        </Container>
+                {loading && 
+                <Container>
+                    <ActivityIndicator size="large" color="#151728" />
+                </Container>}
+                {!loading && <FlatList
+                    contentContainerStyle={styles.list}
+                    showsVerticalScrollIndicator={false}
+                    numColumns={Platform.OS == 'web' ? 2 : 1}
+                    data={images}
+                    keyExtractor={image => image}
+                    renderItem={({ item: image }) => (
+                        <ButtonImage onPress={() => handlerRegister(image)}>
+                            <Image source={{ uri: image }} />
+                        </ButtonImage>
+                    )}
+                />}
+            </Container>
+        </Fragment>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { FlatList, Platform, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/auth'
@@ -16,6 +16,8 @@ import {
     Text,
     GroupText
 } from './styles'
+
+import Header from '../../components/Header'
 
 import { Container } from '../../styles'
 
@@ -101,7 +103,9 @@ const List: React.FC = () => {
     }
 
     return (
-        <Container>
+        <Fragment>
+            <Header />
+            <Container>
             <Title>Your similar words</Title>
             <FlatList
                 contentContainerStyle={{ padding: 24 }}
@@ -167,7 +171,8 @@ const List: React.FC = () => {
                     
                 )}
             />
-        </Container>
+            </Container>
+        </Fragment>
     )
 }
 

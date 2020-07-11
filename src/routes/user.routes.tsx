@@ -43,8 +43,11 @@ function CustomDrawerContent(props: any) {
 } 
 
 const UserRoutes: React.FC = () => (
-    <Drawer.Navigator drawerContentOptions={drawerContentOptions} drawerContent={(props) => <CustomDrawerContent {...props} />}>
+    <Drawer.Navigator 
+    drawerContentOptions={drawerContentOptions} 
+    drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen 
+        
         options={{ drawerIcon: () => <Feather name="home" size={24} color="#9c9cab" /> }}
         name="Home" component={AppRoutes} />
     </Drawer.Navigator>
