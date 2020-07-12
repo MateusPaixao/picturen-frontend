@@ -69,33 +69,30 @@ const List: React.FC = () => {
         setModeAction(mode)
     }
 
-    async function handleUpdate(word: Word, currentWord: string) {
+    function handleUpdate(word: Word, currentWord: string) {
         const { id } = word 
 
         if(!currentWord.trim()){
             Alert.alert('Ops!', 'Type something.')
             return
         }
+        
+        api.put(`/words/${user?.username}/${id}`, { word: currentWord })
 
-        const { status } = await api.put(`/words/${user?.username}/${id}`, { word: currentWord })
+        let wordsUpdate = [...words]
 
-        if(status == 204){
+        const indexUpdated = wordsUpdate.findIndex(word => word.id == id)
+        wordsUpdate[indexUpdated].word = currentWord
 
-            let wordsUpdate = [...words]
-            
-            const indexUpdated = wordsUpdate.findIndex(word => word.id == id)
-            wordsUpdate[indexUpdated].word = currentWord
-
-            setWords(wordsUpdate)
-            setShowBoxAction(0)
-        }
+        setWords(wordsUpdate)
+        setShowBoxAction(0)
     }
 
 
     function handleDelete(word: Word) {
         const { id } = word
 
-        api.delete(`/words/${id}`)
+        api.delete(`/words/${user?.username}/${id}`)
         const updatedWords = words.filter(word => word.id !== id)
 
         setWords(updatedWords)

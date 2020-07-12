@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import { Alert } from 'react-native'
 import api from '../services/api'
 import { getData, storeData, clearData } from '../utils/storage'
 
@@ -51,20 +52,23 @@ export const AuthProvider: React.FC = ({ children }) => {
     }, [])
 
     async function signIn(email: string, password: string) {
-        // const response = await auth.signIn()
-        const { data: userLogged } = await api.post('/sessions', { email, password })
+        setLoading(true)
 
-        if (!userLogged) {
-            alert('Erro on login, try again')
-            return
+        try {
+            const { data: userLogged } = await api.post('/sessions', { email, password })
+
+            setUser(userLogged)
+
+            api.defaults.headers['Authorization'] = `${userLogged.token}`
+
+            await storeData('@PENAuth:user', userLogged)
+            await storeData('@PENAuth:token', { token: userLogged.token })
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            Alert.alert('Ops', 'Error on login, try again')
         }
-
-        setUser(userLogged)
-
-        api.defaults.headers['Authorization'] = `${userLogged.token}`
-
-        await storeData('@PENAuth:user', userLogged)
-        await storeData('@PENAuth:token', { token: userLogged.token })
+        
     }
 
     function signOut() {
