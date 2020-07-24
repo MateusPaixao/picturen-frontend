@@ -14,6 +14,7 @@ export const Text = styled.Text`
     text-transform: uppercase;
     font-weight: bold;
     color: #9c9cab;
+    margin: 10px 0;
     margin-left: 5px;
 `
 
@@ -40,9 +41,14 @@ export const Button = styled.TouchableOpacity`
 export const Image = styled.Image`
     width: 300px;
     height: 300px;
+    background-color: #151728;
 `
 export const ButtonImage = styled.TouchableOpacity`
     margin: 5px;
+    border-radius: 8px;
+    overflow: hidden;
+    elevation: 8;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, .4);
 `
 export const BoxInserted = styled.View`
 `

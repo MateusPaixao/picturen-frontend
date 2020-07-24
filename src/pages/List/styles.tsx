@@ -9,6 +9,8 @@ export const Group = styled.View`
     overflow: hidden;
     border-radius: 8px;
     margin: 5px;
+    elevation: 8;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, .4);
 `
 
 export const Title = styled.Text`

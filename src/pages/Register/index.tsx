@@ -71,6 +71,8 @@ const Register: React.FC = () => {
                     </Button>  
                 </GroupSearch>
 
+                <Text>Double tap on image, for add!</Text>
+
                 {loading && 
                 <Container>
                     <ActivityIndicator size="large" color="#151728" />
