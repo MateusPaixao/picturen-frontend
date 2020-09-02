@@ -10,6 +10,14 @@ export const GroupSearch = styled.View`
     flex-direction: row;
 `
 
+export const Group = styled.View`
+    margin: 5px;
+    border-radius: 8px;
+    overflow: hidden;
+    elevation: 8;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, .4);
+`
+
 export const Text = styled.Text`
     text-transform: uppercase;
     font-weight: bold;
@@ -44,11 +52,10 @@ export const Image = styled.Image`
     background-color: #151728;
 `
 export const ButtonImage = styled.TouchableOpacity`
-    margin: 5px;
-    border-radius: 8px;
-    overflow: hidden;
-    elevation: 8;
-    box-shadow: 0 5px 0 rgba(0, 0, 0, .4);
+    background-color: #151728;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
 `
 export const BoxInserted = styled.View`
 `

@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { FlatList, StyleSheet, Platform, Dimensions, ActivityIndicator } from 'react-native'
-import { Input, Button, GroupSearch, Text, Image, ButtonImage } from './styles'
+import { Input, Button, GroupSearch, Group, Text, Image, ButtonImage } from './styles'
 import { Container } from '../../styles'
 import Header from '../../components/Header'
 import { Feather } from '@expo/vector-icons'
@@ -15,8 +15,7 @@ const window = Dimensions.get("window")
 
 const Register: React.FC = () => {
 
-    let lastPress: number = 0
-
+    const [addDisabled, setDisabled] = useState(false)
     const [images, setImages] = useState([])
     const [word, setWord] = useState('')
     const [loading, setLoading] = useState(false)
@@ -42,21 +41,18 @@ const Register: React.FC = () => {
 
 
     async function handlerRegister(image: string) {
-        let delta = new Date().getTime() - lastPress
 
-        if (delta < 200) {
-            const { data, status } = await api.post('/words', {
-                link: image,
-                word,
-                username: user?.username
-            })
+        setDisabled(true)
+        const { data, status } = await api.post('/words', {
+            link: image,
+            word,
+            username: user?.username
+        })
 
-            if (status == 200) {
-                Alert.alert('Success', 'Added in your list!')
-            }
+        if (status == 200) {
+            setDisabled(false)
+            Alert.alert('Success', 'Added in your list!')
         }
-
-        lastPress = new Date().getTime()
     }
 
     return (
@@ -84,9 +80,15 @@ const Register: React.FC = () => {
                     data={images}
                     keyExtractor={image => image}
                     renderItem={({ item: image }) => (
-                        <ButtonImage onPress={() => handlerRegister(image)}>
+                        <Group>
                             <Image source={{ uri: image }} />
-                        </ButtonImage>
+
+                            <ButtonImage 
+                            disabled={addDisabled}
+                            onPress={() => !addDisabled && handlerRegister(image)}>
+                                <Feather name="plus-circle" size={24} color="#1b86f9" />
+                            </ButtonImage>
+                        </Group>
                     )}
                 />}
             </Container>
