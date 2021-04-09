@@ -23,8 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-       "bundleIdentifier": "com.fjordtech.picturen",
-       "buildNumber": "1.0.0"
+      "bundleIdentifier": "com.fjordtech.picturen",
+      "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -34,10 +34,10 @@
       "package": "com.fjordtech.picturen",
       "versionCode": 1
     },
-
     "androidNavigationBar": {
       "barStyle": "light-content",
       "backgroundColor": "#151728"
-    }
+    },
+    "description": ""
   }
 }
