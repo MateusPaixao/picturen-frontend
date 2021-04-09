@@ -67,7 +67,7 @@ const Register: React.FC = () => {
                     </Button>  
                 </GroupSearch>
 
-                <Text>Double tap on image, for add!</Text>
+                <Text>Click on the plus button to add.</Text>
 
                 {loading && 
                 <Container>
